@@ -34,7 +34,7 @@ int hoarePartition(int* arr, int leftBound, int rightBound){
     // Moving all elements lesser than the pivot to the left of it and all
     // elements greater than the pivot to the right of it
     while(leftIndex < rightIndex){
-        sleep(1);
+        //sleep(1);
         printf("Left-starting: %d, Right-starting: %d\n", leftIndex, rightIndex);
         printf("leftIndex value: %d\n", arr[leftIndex]);
         printf("rightIndex value: %d\n", arr[rightIndex]);
@@ -92,7 +92,7 @@ int main(int argc, char** argv){
     printf("Input %s\n", input);
 
     FILE *fptr; // Pointer to the file
-    fptr = fopen("./input.txt", "r"); // Open in the file in read mode
+    fptr = fopen("./input2.txt", "r"); // Open in the file in read mode
 
     if(fptr == NULL){
         printf("Error opening file.");
@@ -152,15 +152,22 @@ int main(int argc, char** argv){
     */
 
     printf("Sorting arrays\n");
+
     sortArr(arrayA, 0, lineCount - 1);
     printf("Printing list A sorted...\n");
     printArr(arrayA, 0, lineCount);
 
-    /*
-    sortArr(arrayB, 0, lineCount);
+    sortArr(arrayB, 0, lineCount - 1);
     printf("Printing list B...\n");
     printArr(arrayB, 0, lineCount);
-    */
+
+    int total = 0;
+
+    for (int i = 0; i < lineCount; i++){
+        total += abs(arrayA[i] - arrayB[i]);
+    }
+
+    printf("Result: %d\n", total);
     
     return 0;
 }
