@@ -45,7 +45,7 @@ int hoarePartition(int* arr, int leftBound, int rightBound){
         }
         while(arr[rightIndex] > pivot && rightIndex > leftBound){
             rightIndex--;
-            printf("Right index is now %d\n", rightIndex--);
+            printf("Right index is now %d\n", rightIndex);
         }
         // Now the left and right indexes should either be poiting to 
         // elements that need to be swaped or they have crossed meaning
