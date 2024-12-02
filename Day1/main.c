@@ -3,50 +3,66 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
-void printArr(int* arr, int size){
+void printArr(int* arr, int startIndex, int size){
     printf("[ ");
-    for (int i = 0; i < size; i++){
+    for (int i = startIndex; i < size; i++){
         printf("%d ", arr[i]);
     }
     printf("]\n");
 }
 
+void swapArrElements(int* arr, int indexA, int indexB){
+    // Swap value at left index with value at right index
+    int temp = arr[indexA];
+    arr[indexA] = arr[indexB];
+    arr[indexB] = temp;
+}
+
 int hoarePartition(int* arr, int leftBound, int rightBound){
+    printf("Entering hoarePartition...\n");
 
     int pivotIndex = leftBound; // Pivot around first element
     int pivot = arr[pivotIndex];
     int leftIndex = leftBound + 1;
     int rightIndex = rightBound;
+
+    printArr(arr, leftBound, rightBound + 1);
     
     // Paritioning
     // Moving all elements lesser than the pivot to the left of it and all
     // elements greater than the pivot to the right of it
     while(leftIndex < rightIndex){
-        while(arr[leftIndex] < pivot && leftIndex < rightBound){
+        sleep(1);
+        printf("Left-starting: %d, Right-starting: %d\n", leftIndex, rightIndex);
+        printf("leftIndex value: %d\n", arr[leftIndex]);
+        printf("rightIndex value: %d\n", arr[rightIndex]);
+        printf("pivotIndex value: %d\n", pivot);
+        while(arr[leftIndex] <= pivot && leftIndex < rightBound){
             leftIndex++;
+            printf("Left index is now %d\n", leftIndex);
         }
         while(arr[rightIndex] > pivot && rightIndex > leftBound){
             rightIndex--;
+            printf("Right index is now %d\n", rightIndex--);
         }
         // Now the left and right indexes should either be poiting to 
         // elements that need to be swaped or they have crossed meaning
         // that the left and right side of the array are already sorted
-        printf("Left: %d, Right: %d\n", leftIndex, rightIndex);
+        printf("Done searching indexes\n");
 
         // If indexes haven't crossed 
         if(leftIndex < rightIndex){
+            printf("Indexes have not crossed\n");
+            printf("Swapping %d with %d\n", arr[leftIndex], arr[rightIndex]);
             // Swap value at left index with value at right index
-            int temp = arr[leftIndex];
-            arr[leftIndex] = arr[rightIndex];
-            arr[rightIndex] = temp;
+            swapArrElements(arr, leftIndex, rightIndex);
         }
     }
     // Swap pivot with element at right index
     if(arr[rightIndex] < pivot){
-        int temp = arr[pivotIndex];
-        arr[pivotIndex] = arr[rightIndex];
-        arr[rightIndex] = temp;
+        swapArrElements(arr, pivotIndex, rightIndex);
     }
 
     // The new index where the pivot was placed
@@ -62,7 +78,9 @@ void sortArr(int* arr, int leftBound, int rightBound){
     if (leftBound < rightBound){
         int splitIndex = hoarePartition(arr, leftBound, rightBound);
         // Recursive call 
+        printf("Sorting left\n");
         sortArr(arr, leftBound, splitIndex - 1);
+        printf("Sorting right\n");
         sortArr(arr, splitIndex + 1, rightBound);
     }
 }
@@ -124,15 +142,25 @@ int main(int argc, char** argv){
     printf("Num lines: %d\n", lineCount);
 
     printf("Printing list A...\n");
-    printArr(arrayA, lineCount);
+    printArr(arrayA, 0, lineCount);
     printf("Printing list B...\n");
-    printArr(arrayB, lineCount);
+    printArr(arrayB, 0, lineCount);
+    
+    /*
+    printf("Printing list A modified...\n"); 
+    swapArrElements(arrayA, 0, 1);
+    */
 
     printf("Sorting arrays\n");
-    sortArr(arrayA, 0, lineCount);
+    sortArr(arrayA, 0, lineCount - 1);
     printf("Printing list A sorted...\n");
+    printArr(arrayA, 0, lineCount);
+
+    /*
     sortArr(arrayB, 0, lineCount);
     printf("Printing list B...\n");
+    printArr(arrayB, 0, lineCount);
+    */
     
     return 0;
 }
