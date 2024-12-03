@@ -88,6 +88,8 @@ void sortArr(int* arr, int leftBound, int rightBound){
 int main(int argc, char** argv){
     printf("Advent of Code 2024 Day 1\n");
     
+    // Part 1
+    ///////////////////////////////////////////////////////////////////////////////
     char* input = argv[1]; // First arg
     printf("Input %s\n", input);
 
@@ -167,7 +169,27 @@ int main(int argc, char** argv){
         total += abs(arrayA[i] - arrayB[i]);
     }
 
-    printf("Result: %d\n", total);
-    
+    printf("Result for part 1: %d\n", total);
+
+    // Part 2
+    ///////////////////////////////////////////////////////////////////////////////
+    int rightListIndex = 0;
+    int result = 0;
+
+    for (int i = 0; i < lineCount; i++){
+        int value = arrayA[i];
+        int valueMultiple = 0;
+        while(arrayB[rightListIndex] <= value){
+            if (arrayB[rightListIndex] == value){
+                valueMultiple++;
+            }
+            rightListIndex++;
+        }
+        value = value * valueMultiple;
+        result += value;
+    }
+
+    printf("Part 2 result: %d\n", result);
+
     return 0;
 }
